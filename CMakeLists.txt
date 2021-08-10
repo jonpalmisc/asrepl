@@ -2,11 +2,13 @@ cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
 project(asrepl C CXX)
 
+# Options to enable/disable building the CLI and web interface
 option(ASREPL_CLI ON)
 option(ASREPL_WEB OFF)
 
+# Build Keystone for x86, ensure it is linked statically.
 set(BUILD_SHARED_LIBS OFF)
-set(LLVM_TARGETS_TO_BUILD "AArch64;X86")
+set(LLVM_TARGETS_TO_BUILD "X86")
 add_subdirectory(vendor/keystone)
 target_include_directories(keystone PUBLIC vendor/keystone/include)
 
@@ -16,28 +18,34 @@ set(CORE_SRC
   ${CMAKE_SOURCE_DIR}/core/prompt.c
   ${CMAKE_SOURCE_DIR}/core/prompt.h)
 
+# Build the core, statically linking-in Keystone
 add_library(asrepl-core ${CORE_SRC})
 target_include_directories(asrepl-core PUBLIC core)
 target_link_libraries(asrepl-core PUBLIC keystone)
 
 if(ASREPL_CLI)
+  set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)
+
+  # Build linenoise as a static library
   add_library(linenoise
     vendor/linenoise/linenoise.c
     vendor/linenoise/linenoise.h)
   target_include_directories(linenoise PUBLIC vendor/linenoise)
 
-  set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)
+  # Build the CLI & link with linenoise
   add_executable(asrepl-cli ${CLI_SRC})
   target_link_libraries(asrepl-cli asrepl-core linenoise)
 endif()
 
 if(ASREPL_WEB)
   set(WEB_SRC ${CMAKE_SOURCE_DIR}/web/web.cpp)
+
+  # Build the web WASM wrapper
   add_executable(asrepl-web ${WEB_SRC})
   target_link_libraries(asrepl-web asrepl-core)
   target_link_options(asrepl-web PRIVATE --bind)
 
-  # Copy the index.html on build
+  # Copy web assets to the build folder
   add_custom_target(asrepl-web-copy ALL
     COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/web/index.html
@@ -46,5 +54,6 @@ if(ASREPL_WEB)
   add_dependencies(asrepl-web asrepl-web-copy)
 endif()
 
-add_custom_target(clang_format
+# Nice to have
+add_custom_target(format
   COMMAND clang-format -i --style=WebKit ${CORE_SRC} ${CLI_SRC} ${WEB_SRC})
