@@ -1,6 +1,9 @@
-#include <linenoise.h>
 #include <prompt.h>
+
+#include <stddef.h>
 #include <stdio.h>
+
+#include <linenoise.h>
 
 int main(int argc, char** argv)
 {
