@@ -12,6 +12,19 @@ set(LLVM_TARGETS_TO_BUILD "X86")
 add_subdirectory(vendor/keystone)
 target_include_directories(keystone PUBLIC vendor/keystone/include)
 
+# Build Capstone for x86
+set(CAPSTONE_ARCHITECTURE_DEFAULT OFF)
+set(CAPSTONE_X86_SUPPORT ON)
+set(CAPSTONE_BUILD_DIET ON)
+set(CAPSTONE_X86_REDUCE ON)
+set(CAPSTONE_X86_ATT_DISABLE ON)
+set(CAPSTONE_BUILD_STATIC ON)
+set(CAPSTONE_BUILD_SHARED OFF)
+set(CAPSTONE_BUILD_TESTS OFF)
+set(CAPSTONE_BUILD_CSTOOL OFF)
+add_subdirectory(vendor/capstone)
+target_include_directories(capstone-static PUBLIC vendor/capstone/include)
+
 set(CORE_SRC
   ${CMAKE_SOURCE_DIR}/core/engine.c
   ${CMAKE_SOURCE_DIR}/core/engine.h
@@ -21,7 +34,7 @@ set(CORE_SRC
 # Build the core, statically linking-in Keystone
 add_library(asrepl-core ${CORE_SRC})
 target_include_directories(asrepl-core PUBLIC core)
-target_link_libraries(asrepl-core PUBLIC keystone)
+target_link_libraries(asrepl-core PUBLIC keystone capstone-static)
 
 if(ASREPL_CLI)
   set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)

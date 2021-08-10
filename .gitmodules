@@ -4,3 +4,6 @@
 [submodule "vendor/linenoise"]
 	path = vendor/linenoise
 	url = https://github.com/antirez/linenoise.git
+[submodule "vendor/capstone"]
+	path = vendor/capstone
+	url = git@github.com:aquynh/capstone.git
