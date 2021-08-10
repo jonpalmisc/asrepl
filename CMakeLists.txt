@@ -1,16 +1,14 @@
 cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
 
-project(asrepl C)
+project(asrepl C CXX)
 
-set(BUILD_SHARED_LIBS ON)
+option(ASREPL_CLI ON)
+option(ASREPL_WEB OFF)
+
+set(BUILD_SHARED_LIBS OFF)
 set(LLVM_TARGETS_TO_BUILD "AArch64;X86")
 add_subdirectory(vendor/keystone)
 target_include_directories(keystone PUBLIC vendor/keystone/include)
-
-add_library(linenoise
-  vendor/linenoise/linenoise.c
-  vendor/linenoise/linenoise.h)
-target_include_directories(linenoise PUBLIC vendor/linenoise)
 
 set(CORE_SRC
   ${CMAKE_SOURCE_DIR}/core/engine.c
@@ -22,9 +20,23 @@ add_library(asrepl-core ${CORE_SRC})
 target_include_directories(asrepl-core PUBLIC core)
 target_link_libraries(asrepl-core PUBLIC keystone)
 
-set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)
+if(ASREPL_CLI)
+  add_library(linenoise
+    vendor/linenoise/linenoise.c
+    vendor/linenoise/linenoise.h)
+  target_include_directories(linenoise PUBLIC vendor/linenoise)
 
-add_executable(asrepl-cli ${CLI_SRC})
-target_link_libraries(asrepl-cli asrepl-core linenoise)
+  set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)
+  add_executable(asrepl-cli ${CLI_SRC})
+  target_link_libraries(asrepl-cli asrepl-core linenoise)
+endif()
 
-add_custom_target(clang_format COMMAND clang-format -i --style=WebKit ${CORE_SRC} ${CLI_SRC})
+if(ASREPL_WEB)
+  set(WEB_SRC ${CMAKE_SOURCE_DIR}/web/web.cpp)
+  add_executable(asrepl-web ${WEB_SRC})
+  target_link_libraries(asrepl-web asrepl-core)
+  target_link_options(asrepl-web PRIVATE --bind)
+endif()
+
+add_custom_target(clang_format
+  COMMAND clang-format -i --style=WebKit ${CORE_SRC} ${CLI_SRC} ${WEB_SRC})
