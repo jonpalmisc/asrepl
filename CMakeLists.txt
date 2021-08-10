@@ -41,7 +41,8 @@ if(ASREPL_WEB)
   add_custom_target(asrepl-web-copy ALL
     COMMAND ${CMAKE_COMMAND} -E copy
     ${CMAKE_SOURCE_DIR}/web/index.html
-    ${CMAKE_BINARY_DIR}/index.html)
+    ${CMAKE_SOURCE_DIR}/web/asrepl.css
+    ${CMAKE_BINARY_DIR})
   add_dependencies(asrepl-web asrepl-web-copy)
 endif()
 
