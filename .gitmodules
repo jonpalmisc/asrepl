@@ -1,0 +1,6 @@
+[submodule "vendor/keystone"]
+	path = vendor/keystone
+	url = git@github.com:keystone-engine/keystone.git
+[submodule "vendor/linenoise"]
+	path = vendor/linenoise
+	url = https://github.com/antirez/linenoise.git
