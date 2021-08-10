@@ -36,6 +36,13 @@ if(ASREPL_WEB)
   add_executable(asrepl-web ${WEB_SRC})
   target_link_libraries(asrepl-web asrepl-core)
   target_link_options(asrepl-web PRIVATE --bind)
+
+  # Copy the index.html on build
+  add_custom_target(asrepl-web-copy ALL
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${CMAKE_SOURCE_DIR}/web/index.html
+    ${CMAKE_BINARY_DIR}/index.html)
+  add_dependencies(asrepl-web asrepl-web-copy)
 endif()
 
 add_custom_target(clang_format

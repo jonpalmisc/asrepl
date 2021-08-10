@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <title>asrepl-web</title>
+</head>
+
+<body>
+    <input id="repl" type="text" value="" placeholder="Loading..." disabled="true" />
+    <pre id="output"></pre>
+
+    <script>
+        const inputField = document.getElementById("repl");
+        const outputField = document.getElementById("output");
+
+        inputField.addEventListener("keyup", event => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                handleInput();
+            }
+        });
+
+        function handleInput() {
+            const input = inputField.value;
+            const result = Module.send(input);
+
+            let lines = "> " + input + "\n" + result + "\n";
+            outputField.innerText = lines + outputField.innerText;
+            inputField.value = "";
+        }
+
+        var Module = {
+            onRuntimeInitialized: function() {
+                inputField.placeholder = "xor eax, eax;";
+                inputField.disabled = false;
+                Module.init();
+            }
+        };
+    </script>
+    <script src="asrepl-web.js"></script>
+</body>
+
+</html>
