@@ -1,18 +1,17 @@
 #pragma once
 
 #include "engine.h"
+#include <string>
 
-typedef struct {
-    asrepl_engine* engine;
-} asrepl_prompt;
+namespace asrepl {
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+class prompt {
+    asrepl_engine* m_engine;
 
-int asrepl_prompt_init(asrepl_prompt* p);
-char* asrepl_prompt_send(asrepl_prompt* p, const char* input);
+public:
+    prompt();
 
-#ifdef __cplusplus
+    std::string send(const std::string& input);
+};
+
 }
-#endif

@@ -28,7 +28,7 @@ target_include_directories(capstone-static PUBLIC vendor/capstone/include)
 set(CORE_SRC
   ${CMAKE_SOURCE_DIR}/core/engine.c
   ${CMAKE_SOURCE_DIR}/core/engine.h
-  ${CMAKE_SOURCE_DIR}/core/prompt.c
+  ${CMAKE_SOURCE_DIR}/core/prompt.cpp
   ${CMAKE_SOURCE_DIR}/core/prompt.h
   ${CMAKE_SOURCE_DIR}/core/util.cpp
   ${CMAKE_SOURCE_DIR}/core/util.h)
@@ -39,7 +39,7 @@ target_include_directories(asrepl-core PUBLIC core)
 target_link_libraries(asrepl-core PUBLIC keystone capstone-static)
 
 if(ASREPL_CLI)
-  set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.c)
+  set(CLI_SRC ${CMAKE_SOURCE_DIR}/cli/main.cpp)
 
   # Build linenoise as a static library
   add_library(linenoise
