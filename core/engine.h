@@ -15,7 +15,7 @@ public:
     engine();
 
     std::string assemble(const std::string& input);
-    std::string disassemble(const std::vector<unsigned char>& input);
+    std::string disassemble(const std::vector<unsigned char>& input) const;
 };
 
 }

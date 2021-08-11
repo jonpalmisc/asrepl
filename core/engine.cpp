@@ -27,7 +27,7 @@ std::string engine::assemble(const std::string& input)
     return result.str();
 }
 
-std::string engine::disassemble(const std::vector<unsigned char>& input)
+std::string engine::disassemble(const std::vector<unsigned char>& input) const
 {
     cs_insn* insn;
 

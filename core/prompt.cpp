@@ -8,9 +8,7 @@
 
 namespace asrepl {
 
-prompt::prompt()
-{
-}
+prompt::prompt() = default;
 
 std::string prompt::send(const std::string& input)
 {
