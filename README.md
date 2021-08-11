@@ -6,6 +6,16 @@ AS/REPL is a REPL-style interface for assembling and disassembling code. Thanks
 to WebAssembly, AS/REPL is available as both a native CLI application as well as
 a website.
 
+## Features
+
+AS/REPL is a relatively simple project --- input assembly mnemonics or opcodes,
+get back the other.
+
+Currently only (dis)assembling 64-bit x86 code is supported. However, since
+AS/REPL uses both [Capstone](https://github.com/aquynh/capstone) and
+[Keystone](https://github.com/keystone-engine/keystone) under the hood, adding
+support for more architectures should be trivial, and is planned.
+
 ## Dependencies
 
 AS/REPL uses the following libraries:
@@ -43,3 +53,8 @@ emcmake cmake -S . -B build -DASREPL_CLI=OFF -DASREPL_WEB=ON
 
 For the latter, you need to have already activated the Emscripten SDK in your
 environment so the `emcmake` command is available.
+
+## License
+
+AS/REPL is licensed under the GNU General Public License, Version 3. For more
+information, see LICENSE.txt.
