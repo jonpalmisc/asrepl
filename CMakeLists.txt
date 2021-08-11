@@ -29,7 +29,9 @@ set(CORE_SRC
   ${CMAKE_SOURCE_DIR}/core/engine.c
   ${CMAKE_SOURCE_DIR}/core/engine.h
   ${CMAKE_SOURCE_DIR}/core/prompt.c
-  ${CMAKE_SOURCE_DIR}/core/prompt.h)
+  ${CMAKE_SOURCE_DIR}/core/prompt.h
+  ${CMAKE_SOURCE_DIR}/core/util.cpp
+  ${CMAKE_SOURCE_DIR}/core/util.h)
 
 # Build the core, statically linking-in Keystone
 add_library(asrepl-core ${CORE_SRC})

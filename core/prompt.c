@@ -1,7 +1,6 @@
 #include "prompt.h"
 #include "engine.h"
-
-#include <stdlib.h>
+#include "util.h"
 
 int asrepl_prompt_init(asrepl_prompt* p)
 {
@@ -12,8 +11,20 @@ int asrepl_prompt_init(asrepl_prompt* p)
 char* asrepl_prompt_send(asrepl_prompt* p, const char* input)
 {
     char* res;
-    if (asrepl_engine_asm(p->engine, input, &res) != 0)
-        res = "Error: Invalid input";
+    int err;
+
+    if (is_hex_string(input)) {
+        unsigned char* code;
+        size_t code_size = hex_decode(input, &code);
+        err = asrepl_engine_disasm(p->engine, code, code_size, &res);
+
+        if (err != 0)
+            res = "Error: Failed to disassemble";
+    } else {
+        err = asrepl_engine_asm(p->engine, input, &res);
+        if (err != 0)
+            res = "Error: Failed to assemble";
+    }
 
     return res;
 }
