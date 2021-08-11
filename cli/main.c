@@ -13,6 +13,6 @@ int main(int argc, char** argv)
     char* line;
     while ((line = linenoise("as> ")) != NULL) {
         char* result = asrepl_prompt_send(&p, line);
-        printf("  %s\n", result);
+        printf("%s\n", result);
     }
 }
