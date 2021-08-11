@@ -36,6 +36,7 @@ set(CORE_SRC
 # Build the core, statically linking-in Keystone
 add_library(asrepl-core ${CORE_SRC})
 target_include_directories(asrepl-core PUBLIC core)
+target_compile_features(asrepl-core PUBLIC cxx_std_17)
 target_link_libraries(asrepl-core PUBLIC keystone capstone-static)
 
 if(ASREPL_CLI)

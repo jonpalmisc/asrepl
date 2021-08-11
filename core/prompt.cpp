@@ -2,7 +2,9 @@
 
 #include "engine.h"
 #include "util.h"
+
 #include <string>
+#include <vector>
 
 namespace asrepl {
 
@@ -17,22 +19,18 @@ std::string prompt::send(const std::string& input)
     char* res;
     int err;
 
-    if (is_hex_string(input.c_str())) {
-        unsigned char* code;
-        size_t code_size = hex_decode(input.c_str(), &code);
-        err = asrepl_engine_disasm(m_engine, code, code_size, &res);
-
+    if (util::is_hex_string(input)) {
+        auto code = util::hex_decode(input);
+        err = asrepl_engine_disasm(m_engine, &code[0], code.size(), &res);
         if (err != 0)
             res = "Error: Failed to disassemble";
     } else {
         err = asrepl_engine_asm(m_engine, input.c_str(), &res);
-        // if (err != 0)
-        //     res = "Error: Failed to assemble";
+        if (err != 0)
+            res = "Error: Failed to assemble";
     }
 
-    auto sres = std::string(res);
-
-    return sres;
+    return std::string(res);
 }
 
 }
