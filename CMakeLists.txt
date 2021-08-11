@@ -26,7 +26,7 @@ add_subdirectory(vendor/capstone)
 target_include_directories(capstone-static PUBLIC vendor/capstone/include)
 
 set(CORE_SRC
-  ${CMAKE_SOURCE_DIR}/core/engine.c
+  ${CMAKE_SOURCE_DIR}/core/engine.cpp
   ${CMAKE_SOURCE_DIR}/core/engine.h
   ${CMAKE_SOURCE_DIR}/core/prompt.cpp
   ${CMAKE_SOURCE_DIR}/core/prompt.h

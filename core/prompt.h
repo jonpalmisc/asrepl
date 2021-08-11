@@ -6,7 +6,7 @@
 namespace asrepl {
 
 class prompt {
-    asrepl_engine* m_engine;
+    engine m_engine;
 
 public:
     prompt();
