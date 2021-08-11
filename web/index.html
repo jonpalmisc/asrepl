@@ -26,7 +26,7 @@
 
         function handleInput() {
             const input = inputField.value;
-            const result = Module.send(input);
+            const result = Module.asreplSend(input);
 
             outputField.innerText += "> " + input + "\n" + result + "\n";
             outputField.scrollTop = outputField.scrollHeight;
@@ -37,7 +37,6 @@
             onRuntimeInitialized: function() {
                 inputField.placeholder = "xor eax, eax";
                 inputField.disabled = false;
-                Module.init();
             }
         };
     </script>
