@@ -14,6 +14,7 @@ prompt::prompt()
 }
 
 constexpr auto k_command_mode = "/mode";
+constexpr auto k_command_arch = "/arch";
 constexpr auto k_command_help = "/help";
 constexpr auto k_command_exit = "/exit";
 constexpr auto k_command_quit = "/quit";
@@ -31,6 +32,20 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
     if (command == k_command_exit || command == k_command_quit) {
         m_exit_requested = true;
         return "";
+    }
+
+    if (command == k_command_arch) {
+        if (args.size() < 2)
+            return "Usage: /arch {intel,arm}";
+
+        auto arch = args[1];
+        if (arch != "intel" && arch != "arm")
+            return "Error: Unrecognized mode; expected 'intel' or 'arm'";
+
+        m_engine.set_arch(arch == "arm" ? engine::arch::arm : engine::arch::intel);
+        m_engine.restart();
+
+        return "Architecture changed to '" + arch + "'";
     }
 
     if (command == k_command_mode) {
