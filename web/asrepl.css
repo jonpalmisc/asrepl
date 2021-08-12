@@ -52,3 +52,13 @@ pre {
   max-height: 12rem;
   overflow-y: scroll;
 }
+
+.links {
+  font-size: 0.9rem;
+  color: #3e5463;
+  margin-top: 1rem;
+}
+
+a {
+  color: #186ade;
+}
