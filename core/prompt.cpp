@@ -15,6 +15,7 @@ prompt::prompt()
 
 constexpr auto k_command_mode = "/mode";
 constexpr auto k_command_arch = "/arch";
+constexpr auto k_command_info = "/info";
 constexpr auto k_command_help = "/help";
 constexpr auto k_command_exit = "/exit";
 constexpr auto k_command_quit = "/quit";
@@ -34,6 +35,13 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
         return "";
     }
 
+    if (command == k_command_info) {
+        std::string arch = m_engine.arch() == engine::arch::intel ? "Intel" : "ARM";
+        std::string mode = m_engine.mode() == engine::mode::b64 ? "64-bit" : "32-bit";
+
+        return "Architecture is " + arch + ", " + mode;
+    }
+
     if (command == k_command_arch) {
         if (args.size() < 2)
             return "Usage: /arch {intel,arm}";
@@ -44,8 +52,6 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
         m_engine.set_arch(arch == "arm" ? engine::arch::arm : engine::arch::intel);
         m_engine.restart();
-
-        return "Architecture changed to '" + arch + "'";
     }
 
     if (command == k_command_mode) {
@@ -58,8 +64,6 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
         m_engine.set_mode(mode == "32" ? engine::mode::b32 : engine::mode::b64);
         m_engine.restart();
-
-        return "Mode changed to " + mode + "-bit";
     }
 
     return "Error: Unknown command, see /help for more info";
