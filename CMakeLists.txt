@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.11 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
 project(asrepl C CXX)
 
@@ -7,21 +7,20 @@ option(ASREPL_CLI ON)
 option(ASREPL_WEB OFF)
 
 # Build Keystone for x86, ensure it is linked statically.
-set(BUILD_SHARED_LIBS OFF)
-set(LLVM_TARGETS_TO_BUILD "X86")
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+set(BUILD_LIBS_ONLY ON CACHE BOOL "" FORCE)
+set(LLVM_TARGETS_TO_BUILD "X86" CACHE STRING "" FORCE)
 add_subdirectory(vendor/keystone)
 target_include_directories(keystone PUBLIC vendor/keystone/include)
 
 # Build Capstone for x86
-set(CAPSTONE_ARCHITECTURE_DEFAULT OFF)
-set(CAPSTONE_X86_SUPPORT ON)
-set(CAPSTONE_BUILD_DIET ON)
-set(CAPSTONE_X86_REDUCE ON)
-set(CAPSTONE_X86_ATT_DISABLE ON)
-set(CAPSTONE_BUILD_STATIC ON)
-set(CAPSTONE_BUILD_SHARED OFF)
-set(CAPSTONE_BUILD_TESTS OFF)
-set(CAPSTONE_BUILD_CSTOOL OFF)
+set(CAPSTONE_ARCHITECTURE_DEFAULT OFF CACHE BOOL "" FORCE)
+set(CAPSTONE_X86_SUPPORT ON CACHE BOOL "" FORCE)
+set(CAPSTONE_X86_ATT_DISABLE ON CACHE BOOL "" FORCE)
+set(CAPSTONE_BUILD_SHARED OFF CACHE BOOL "" FORCE)
+set(CAPSTONE_BUILD_STATIC ON CACHE BOOL "" FORCE)
+set(CAPSTONE_BUILD_TESTS OFF CACHE BOOL "" FORCE)
+set(CAPSTONE_BUILD_CSTOOL OFF CACHE BOOL "" FORCE)
 add_subdirectory(vendor/capstone)
 target_include_directories(capstone-static PUBLIC vendor/capstone/include)
 
