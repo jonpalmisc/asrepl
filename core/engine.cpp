@@ -1,6 +1,7 @@
 #include "engine.h"
 
 #include <iomanip>
+#include <iostream>
 #include <sstream>
 #include <vector>
 
@@ -23,7 +24,7 @@ void engine::restart()
 
     if (m_arch == arch::arm) {
         ks_arch = m_mode == mode::b64 ? KS_ARCH_ARM64 : KS_ARCH_ARM;
-        ks_mode = KS_MODE_ARM;
+        ks_mode = m_mode == mode::b64 ? KS_MODE_LITTLE_ENDIAN : KS_MODE_ARM;
         cs_arch = m_mode == mode::b64 ? CS_ARCH_ARM64 : CS_ARCH_ARM;
         cs_mode = CS_MODE_ARM;
     }
@@ -33,8 +34,11 @@ void engine::restart()
         cs_close(&m_cs);
     }
 
-    ks_open(ks_arch, ks_mode, &m_ks);
-    cs_open(cs_arch, cs_mode, &m_cs);
+    if (ks_err ke = ks_open(ks_arch, ks_mode, &m_ks); ke != KS_ERR_OK)
+        std::cout << "Failed to load Keystone; this is a bug, crashes are imminent (" << (int)ke << ")\n";
+    if (cs_err ce = cs_open(cs_arch, cs_mode, &m_cs); ce != CS_ERR_OK)
+        std::cout << "Failed to load Capstone; this is a bug, crashes are imminent (" << (int)ce << ")\n";
+
     m_active = true;
 }
 

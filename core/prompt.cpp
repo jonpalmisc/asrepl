@@ -13,6 +13,7 @@ prompt::prompt()
 {
 }
 
+constexpr auto k_command_mode = "/mode";
 constexpr auto k_command_help = "/help";
 constexpr auto k_command_exit = "/exit";
 constexpr auto k_command_quit = "/quit";
@@ -30,6 +31,20 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
     if (command == k_command_exit || command == k_command_quit) {
         m_exit_requested = true;
         return "";
+    }
+
+    if (command == k_command_mode) {
+        if (args.size() < 2)
+            return "Usage: /mode {32,64}";
+
+        auto mode = args[1];
+        if (mode != "32" && mode != "64")
+            return "Error: Unrecognized mode; expected '32' or '64'";
+
+        m_engine.set_mode(mode == "32" ? engine::mode::b32 : engine::mode::b64);
+        m_engine.restart();
+
+        return "Mode changed to " + mode + "-bit";
     }
 
     return "Error: Unknown command, see /help for more info";
