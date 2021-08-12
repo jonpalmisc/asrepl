@@ -12,10 +12,10 @@ engine::engine()
     , m_mode(mode::b64)
     , m_active(false)
 {
-    restart();
+    reconfigure();
 }
 
-void engine::restart()
+void engine::reconfigure()
 {
     ks_arch ks_arch = KS_ARCH_X86;
     int ks_mode = m_mode == mode::b64 ? KS_MODE_64 : KS_MODE_32;

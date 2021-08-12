@@ -61,7 +61,7 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
             return "Error: Unrecognized mode; expected 'intel' or 'arm'";
 
         m_engine.set_arch(arch == "arm" ? engine::arch::arm : engine::arch::intel);
-        m_engine.restart();
+        m_engine.reconfigure();
     }
 
     if (command == k_command_mode) {
@@ -73,7 +73,7 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
             return "Error: Unrecognized mode; expected '32' or '64'";
 
         m_engine.set_mode(mode == "32" ? engine::mode::b32 : engine::mode::b64);
-        m_engine.restart();
+        m_engine.reconfigure();
     }
 
     return "Error: Unknown command, see /help for more info";
