@@ -3,6 +3,7 @@
 #include "engine.h"
 #include "util.h"
 
+#include <sstream>
 #include <string>
 #include <vector>
 
@@ -27,8 +28,17 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
     auto command = args[0];
 
-    if (command == k_command_help)
-        return "Help is currently unavailable";
+    if (command == k_command_help) {
+        std::stringstream info;
+
+        info << k_command_mode << " | Set the processor mode; 32-bit or 64-bit" << std::endl;
+        info << k_command_arch << " | Set the processor architecture; Intel or ARM" << std::endl;
+        info << k_command_info << " | Print the active architecture and mode" << std::endl;
+        info << k_command_help << " | Show this help message" << std::endl;
+        info << k_command_quit << " | Exit the application (CLI only)" << std::endl;
+
+        return info.str();
+    }
 
     if (command == k_command_exit || command == k_command_quit) {
         m_exit_requested = true;
