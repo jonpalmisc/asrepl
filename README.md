@@ -1,20 +1,31 @@
 # AS/REPL
 
-> A REPL-style (dis)assembler for the terminal and the web
+```
+AS/REPL> lea rbx, [rsp + 4]
+488d5c2404
+AS/REPL> 31c0
+xor eax, eax
+```
 
-AS/REPL is a REPL-style interface for assembling and disassembling code. Thanks
-to WebAssembly, AS/REPL is available as both a native CLI application as well as
-a website.
+> A brief example of what interacting with AS/REPL looks like.
 
-## Features
+AS/REPL is a REPL-style interface for assembling and disassembling code; input
+assembly mnemonics or opcodes, get back the other. Thanks to WebAssembly,
+AS/REPL is available as both a native CLI application as well as a website. If
+you want, you can [try AS/REPL online](https://asrepl.jonpalmisc.com) right now!
 
-AS/REPL is a relatively simple project --- input assembly mnemonics or opcodes,
-get back the other.
+## Architectures
 
-Currently only (dis)assembling 64-bit x86 code is supported. However, since
-AS/REPL uses both [Capstone](https://github.com/aquynh/capstone) and
-[Keystone](https://github.com/keystone-engine/keystone) under the hood, adding
-support for more architectures should be trivial, and is planned.
+At this time, only the following architectures are supported:
+
+- Intel, 32-bit
+- Intel, 64-bit
+- ARM, 32-bit
+- ARM, 64-bit
+
+However, since AS/REPL uses both [Capstone](https://github.com/aquynh/capstone)
+and [Keystone](https://github.com/keystone-engine/keystone) under the hood,
+adding support for more architectures should be trivial, and is planned.
 
 ## Dependencies
 
@@ -47,12 +58,15 @@ Next, run CMake either of the following ways depending on the desired target:
 # Native CLI
 cmake -S . -B build
 
-# Web Application
+# Web application
 emcmake cmake -S . -B build -DASREPL_CLI=OFF -DASREPL_WEB=ON
 ```
 
 For the latter, you need to have already activated the Emscripten SDK in your
-environment so the `emcmake` command is available.
+environment so the `emcmake` command is available. Starting a web server in the
+build directory once AS/REPL is built will allow you to use AS/REPL's web
+interface. Easy solutions include `python3 -m http.server` or `php -S
+localhost:8000`.
 
 ## License
 
