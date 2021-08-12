@@ -46,10 +46,7 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
     }
 
     if (command == k_command_info) {
-        std::string arch = m_engine.arch() == engine::arch::intel ? "Intel" : "ARM";
-        std::string mode = m_engine.mode() == engine::mode::b64 ? "64-bit" : "32-bit";
-
-        return "Architecture is " + arch + ", " + mode;
+        return info_string();
     }
 
     if (command == k_command_arch) {
@@ -62,6 +59,8 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
         m_engine.set_arch(arch == "arm" ? engine::arch::arm : engine::arch::intel);
         m_engine.reconfigure();
+
+        return info_string();
     }
 
     if (command == k_command_mode) {
@@ -74,9 +73,19 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
         m_engine.set_mode(mode == "32" ? engine::mode::b32 : engine::mode::b64);
         m_engine.reconfigure();
+
+        return info_string();
     }
 
     return "Error: Unknown command, see /help for more info";
+}
+
+std::string prompt::info_string() const
+{
+    std::string arch = m_engine.arch() == engine::arch::intel ? "Intel" : "ARM";
+    std::string mode = m_engine.mode() == engine::mode::b64 ? "64-bit" : "32-bit";
+
+    return "Architecture is " + arch + ", " + mode;
 }
 
 std::string prompt::send(const std::string& input)

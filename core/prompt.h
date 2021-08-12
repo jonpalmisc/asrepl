@@ -10,6 +10,7 @@ class prompt {
     bool m_exit_requested;
 
     std::string handle_command(const std::vector<std::string>& args);
+    std::string info_string() const;
 
 public:
     prompt();
