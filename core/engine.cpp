@@ -1,5 +1,6 @@
 #include "engine.h"
 
+#include <iomanip>
 #include <sstream>
 #include <vector>
 
@@ -21,7 +22,7 @@ std::string engine::assemble(const std::string& input)
 
     std::stringstream result;
     for (size_t i = 0; i < size; i++)
-        result << std::hex << (int)code[i];
+        result << std::hex << std::setw(2) << std::setfill('0') << (int)code[i];
 
     ks_free(code);
     return result.str();
