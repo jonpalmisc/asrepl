@@ -8,6 +8,8 @@ namespace asrepl {
 class prompt {
     engine m_engine;
 
+    std::string handle_command(const std::vector<std::string>& args);
+
 public:
     prompt();
 
