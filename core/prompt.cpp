@@ -17,8 +17,8 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
     if (args[0] == "/help")
         return "Help is currently unavailable";
-    else
-        return "Error: Unknown command, see /help for more info";
+
+    return "Error: Unknown command, see /help for more info";
 }
 
 std::string prompt::send(const std::string& input)

@@ -14,7 +14,7 @@ bool is_hex_string(std::string input)
 bool is_command_string(std::string input)
 {
     input.erase(std::remove(input.begin(), input.end(), ' '), input.end());
-    return input.rfind("/", 0) == 0;
+    return input.rfind('/', 0) == 0;
 }
 
 std::vector<std::string> tokenize(const std::string& input)
