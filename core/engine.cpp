@@ -34,8 +34,11 @@ std::string engine::disassemble(const std::vector<unsigned char>& input) const
     size_t count = cs_disasm(m_cs, &input[0], input.size(), 0, 0, &insn);
     if (count > 0) {
         std::stringstream result;
-        for (size_t i = 0; i < count; i++)
-            result << insn[i].mnemonic << " " << insn[i].op_str << "\n";
+        for (size_t i = 0; i < count; i++) {
+            result << insn[i].mnemonic << " " << insn[i].op_str;
+            if (i != count - 1)
+                result << "\n";
+        }
 
         cs_free(insn, count);
         return result.str();
