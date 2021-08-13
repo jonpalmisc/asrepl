@@ -14,7 +14,7 @@ assembly mnemonics or opcodes, get back the other. Thanks to WebAssembly,
 AS/REPL is available as both a native CLI application as well as a website. If
 you want, you can [try AS/REPL online](https://asrepl.jonpalmisc.com) right now!
 
-## Architectures
+## Supported architectures
 
 At this time, only the following architectures are supported:
 
@@ -27,7 +27,7 @@ However, since AS/REPL uses both [Capstone](https://github.com/aquynh/capstone)
 and [Keystone](https://github.com/keystone-engine/keystone) under the hood,
 adding support for more architectures should be trivial, and is planned.
 
-## Dependencies
+## Build dependencies
 
 AS/REPL uses the following libraries:
 
@@ -42,7 +42,7 @@ Emscripten may be available in your package manager, it is recommended to
 [install the Emscripten
 SDK](https://emscripten.org/docs/getting_started/downloads.html).
 
-## Building
+## Build instructions
 
 AS/REPL is rather easy to build. All builds will require you to clone the
 repository and all of its submodules:
@@ -68,7 +68,9 @@ build directory once AS/REPL is built will allow you to use AS/REPL's web
 interface. Easy solutions include `python3 -m http.server` or `php -S
 localhost:8000`.
 
-## License
+## License and credits
 
 AS/REPL is licensed under the GNU General Public License, Version 3. For more
 information, see LICENSE.txt.
+
+This project was inspired by [jsasm](https://jsasm.mmae.kr/).
