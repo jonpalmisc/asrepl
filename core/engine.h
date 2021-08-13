@@ -4,6 +4,7 @@
 #include <keystone/keystone.h>
 
 #include <string>
+#include <vector>
 
 namespace asrepl {
 

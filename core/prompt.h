@@ -2,6 +2,7 @@
 
 #include "engine.h"
 #include <string>
+#include <vector>
 
 namespace asrepl {
 
