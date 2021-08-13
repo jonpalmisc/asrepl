@@ -15,6 +15,11 @@ class prompt {
 public:
     prompt();
 
+    /**
+     * Get the startup/welcome message.
+     */
+    std::string welcome_message() const;
+
     std::string send(const std::string& input);
     bool exit_requested() const;
 };

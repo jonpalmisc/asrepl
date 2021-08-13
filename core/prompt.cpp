@@ -29,6 +29,16 @@ constexpr auto k_command_about = "/about";
 constexpr auto k_command_exit = "/quit";
 constexpr auto k_command_exit_short = "/q";
 
+std::string prompt::welcome_message() const
+{
+    std::stringstream welcome;
+
+    welcome << "Welcome to AS/REPL!" << std::endl;
+    welcome << "Enter mnemonics or opcodes you want to (dis)assemble; type /? for help." << std::endl;
+
+    return welcome.str();
+}
+
 std::string prompt::handle_command(const std::vector<std::string>& args)
 {
     if (args.empty())
