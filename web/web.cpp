@@ -3,14 +3,28 @@
 #include <emscripten/bind.h>
 #include <emscripten/emscripten.h>
 
-static asrepl::prompt g_prompt;
+#include <iostream>
+
+asrepl::prompt* g_prompt = nullptr;
 
 EMSCRIPTEN_KEEPALIVE std::string send(const std::string& input)
 {
-    return g_prompt.send(input);
+    return g_prompt->send(input);
+}
+
+EMSCRIPTEN_KEEPALIVE void init()
+{
+    std::cout << "Initializing prompt... ";
+    g_prompt = new asrepl::prompt;
+    std::cout << "Done." << std::endl;
 }
 
 EMSCRIPTEN_BINDINGS(asrepl_web)
 {
+    emscripten::function("asreplInit", &init);
     emscripten::function("asreplSend", &send);
+}
+
+int main() {
+    std::cout << "AS/REPL WebAssembly module loaded." << std::endl;
 }

@@ -7,7 +7,7 @@ int main(int argc, char** argv)
     asrepl::prompt p;
 
     char* line;
-    while ((line = linenoise("AS/REPL> ")) != NULL) {
+    while ((line = linenoise("AS/REPL> ")) != nullptr) {
         std::cout << p.send(line) << std::endl;
 
         if (p.exit_requested())
