@@ -73,4 +73,6 @@ localhost:8000`.
 AS/REPL is licensed under the GNU General Public License, Version 3. For more
 information, see LICENSE.txt.
 
-This project was inspired by [jsasm](https://jsasm.mmae.kr/).
+This project was inspired by [jsasm](https://jsasm.mmae.kr/), and is not related
+to [asrepl](https://github.com/enferex/asrepl), which I discovered after
+publishing this project.
