@@ -8,5 +8,6 @@ cp ./build/index.html ${DIST_DIR}
 cp ./build/asrepl.css ${DIST_DIR}
 cp ./build/asrepl-web.js ${DIST_DIR}
 cp ./build/asrepl-web.wasm ${DIST_DIR}
+cp ./build/favicon.png ${DIST_DIR}
 
 az storage blob upload-batch -s ${DIST_DIR} -d "\$web" --account-name asrepl
