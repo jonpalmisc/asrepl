@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-project(asrepl LANGUAGES C CXX VERSION 0.3.0)
+project(asrepl LANGUAGES C CXX VERSION 0.4.0)
 
 # Options to enable/disable building the CLI and web interface
 option(ASREPL_CLI ON)
