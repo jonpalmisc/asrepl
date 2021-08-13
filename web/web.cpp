@@ -7,11 +7,6 @@
 
 asrepl::prompt* g_prompt = nullptr;
 
-EMSCRIPTEN_KEEPALIVE std::string send(const std::string& input)
-{
-    return g_prompt->send(input);
-}
-
 EMSCRIPTEN_KEEPALIVE void init()
 {
     std::cout << "Initializing prompt... ";
@@ -19,9 +14,21 @@ EMSCRIPTEN_KEEPALIVE void init()
     std::cout << "Done." << std::endl;
 }
 
+EMSCRIPTEN_KEEPALIVE std::string welcome_message()
+{
+    return g_prompt->welcome_message();
+}
+
+EMSCRIPTEN_KEEPALIVE std::string send(const std::string& input)
+{
+    return g_prompt->send(input);
+}
+
+
 EMSCRIPTEN_BINDINGS(asrepl_web)
 {
     emscripten::function("asreplInit", &init);
+    emscripten::function("asreplWelcome", &welcome_message);
     emscripten::function("asreplSend", &send);
 }
 
