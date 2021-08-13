@@ -130,11 +130,11 @@ std::string prompt::send(const std::string& input)
         auto code = util::hex_decode(input);
         result = m_engine.disassemble(code);
         if (result.empty())
-            result = "Error: Failed to disassemble";
+            result = "Error: Failed to disassemble input";
     } else {
         result = m_engine.assemble(input);
         if (result.empty())
-            result = "Error: Failed to assemble";
+            result = "Error: Failed to assemble input";
     }
 
     return result;

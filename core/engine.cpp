@@ -47,8 +47,10 @@ std::string engine::assemble(const std::string& input)
     size_t count, size;
     unsigned char* code;
 
-    if (ks_asm(m_ks, input.c_str(), 0, &code, &size, &count) != KS_ERR_OK)
-        return "";
+    if (ks_asm(m_ks, input.c_str(), 0, &code, &size, &count) != KS_ERR_OK) {
+        auto* error_desc = ks_strerror(ks_errno(m_ks));
+        return "Error: " + std::string(error_desc);
+    }
 
     std::stringstream result;
     for (size_t i = 0; i < size; i++)
@@ -75,7 +77,7 @@ std::string engine::disassemble(const std::vector<unsigned char>& input) const
         return result.str();
     }
 
-    return "";
+    return "Error: No instructions found";
 }
 
 enum engine::arch engine::arch() const
