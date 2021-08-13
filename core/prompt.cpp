@@ -7,6 +7,10 @@
 #include <string>
 #include <vector>
 
+#ifndef ASREPL_VERSION
+#define ASREPL_VERSION "0.0.0"
+#endif
+
 namespace asrepl {
 
 prompt::prompt()
@@ -18,6 +22,7 @@ constexpr auto k_command_mode = "/mode";
 constexpr auto k_command_arch = "/arch";
 constexpr auto k_command_info = "/info";
 constexpr auto k_command_help = "/help";
+constexpr auto k_command_about = "/about";
 constexpr auto k_command_exit = "/exit";
 constexpr auto k_command_quit = "/quit";
 
@@ -28,22 +33,29 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
 
     auto command = args[0];
 
+    if (command == k_command_about)
+        return "AS/REPL v" ASREPL_VERSION " --- https://github.com/jonpalmisc/asrepl";
+
     if (command == k_command_help) {
         std::stringstream info;
 
-        info << k_command_mode << " | Set the processor mode; 32-bit or 64-bit" << std::endl;
-        info << k_command_arch << " | Set the processor architecture; Intel or ARM" << std::endl;
-        info << k_command_info << " | Print the active architecture and mode" << std::endl;
-        info << k_command_help << " | Show this help message" << std::endl;
-        info << k_command_quit << " | Exit the application (CLI only)" << std::endl;
-
+        info << k_command_mode << "     Set the processor mode; 32-bit or 64-bit" << std::endl;
+        info << k_command_arch << "     Set the processor architecture; Intel or ARM" << std::endl;
+        info << k_command_info << "     Print the active architecture and mode" << std::endl;
+        info << k_command_help << "     Show this help message" << std::endl;
+        info << k_command_about << "    Show version and program info" << std::endl;
+#ifndef __EMSCRIPTEN__
+        info << k_command_quit << "     Exit the application" << std::endl;
+#endif
         return info.str();
     }
 
+#ifndef __EMSCRIPTEN__
     if (command == k_command_exit || command == k_command_quit) {
         m_exit_requested = true;
         return "";
     }
+#endif
 
     if (command == k_command_info) {
         return info_string();

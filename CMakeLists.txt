@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.13 FATAL_ERROR)
 
-project(asrepl C CXX)
+project(asrepl LANGUAGES C CXX VERSION 0.2.0)
 
 # Options to enable/disable building the CLI and web interface
 option(ASREPL_CLI ON)
@@ -38,6 +38,7 @@ set(CORE_SRC
 add_library(asrepl-core ${CORE_SRC})
 target_include_directories(asrepl-core PUBLIC core)
 target_compile_features(asrepl-core PUBLIC cxx_std_17)
+target_compile_definitions(asrepl-core PUBLIC ASREPL_VERSION="${CMAKE_PROJECT_VERSION}")
 target_link_libraries(asrepl-core PUBLIC keystone capstone-static)
 
 if(ASREPL_CLI)
