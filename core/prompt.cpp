@@ -19,12 +19,15 @@ prompt::prompt()
 }
 
 constexpr auto k_command_mode = "/mode";
+constexpr auto k_command_mode_short = "/m";
 constexpr auto k_command_arch = "/arch";
+constexpr auto k_command_arch_short = "/a";
 constexpr auto k_command_info = "/info";
 constexpr auto k_command_help = "/help";
+constexpr auto k_command_help_short = "/?";
 constexpr auto k_command_about = "/about";
-constexpr auto k_command_exit = "/exit";
-constexpr auto k_command_quit = "/quit";
+constexpr auto k_command_exit = "/quit";
+constexpr auto k_command_exit_short = "/q";
 
 std::string prompt::handle_command(const std::vector<std::string>& args)
 {
@@ -36,22 +39,28 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
     if (command == k_command_about)
         return "AS/REPL v" ASREPL_VERSION " --- https://github.com/jonpalmisc/asrepl";
 
-    if (command == k_command_help) {
+    if (command == k_command_help || command == k_command_help_short) {
         std::stringstream info;
 
-        info << k_command_mode << "     Set the processor mode; 32-bit or 64-bit" << std::endl;
-        info << k_command_arch << "     Set the processor architecture; Intel or ARM" << std::endl;
-        info << k_command_info << "     Print the active architecture and mode" << std::endl;
-        info << k_command_help << "     Show this help message" << std::endl;
-        info << k_command_about << "    Show version and program info" << std::endl;
+        info << k_command_mode_short << ", " << k_command_mode
+             << "     Set the processor mode; 32-bit or 64-bit" << std::endl;
+        info << k_command_arch_short << ", " << k_command_arch
+             << "     Set the processor architecture; Intel or ARM" << std::endl;
+        info << k_command_info
+             << "         Print the active architecture and mode" << std::endl;
+        info << k_command_help_short << ", " << k_command_help
+             << "     Show this help message" << std::endl;
+        info << k_command_about
+             << "        Show version and program info" << std::endl;
 #ifndef __EMSCRIPTEN__
-        info << k_command_quit << "     Exit the application" << std::endl;
+        info << k_command_exit_short << ", "
+             << k_command_exit << "     Exit the application" << std::endl;
 #endif
         return info.str();
     }
 
 #ifndef __EMSCRIPTEN__
-    if (command == k_command_exit || command == k_command_quit) {
+    if (command == k_command_exit || command == k_command_exit_short) {
         m_exit_requested = true;
         return "";
     }
@@ -61,7 +70,7 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
         return info_string();
     }
 
-    if (command == k_command_arch) {
+    if (command == k_command_arch || command == k_command_arch_short) {
         if (args.size() < 2)
             return "Usage: /arch {intel,arm}";
 
@@ -75,7 +84,7 @@ std::string prompt::handle_command(const std::vector<std::string>& args)
         return info_string();
     }
 
-    if (command == k_command_mode) {
+    if (command == k_command_mode || command == k_command_mode_short) {
         if (args.size() < 2)
             return "Usage: /mode {32,64}";
 
